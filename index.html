@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Awesome Clock 2</title>
+	<style type="text/css" media="screen">
+		html,body {
+			height: 100%;
+			min-height: 100%;
+			width: 100%;
+			margin: 0;
+			padding: 0;
+			font-family: arial;
+			font-size: 16px;
+		}
+
+		body {	
+			background: url(res/images/back.jpg);
+			background-size: cover;
+		}
+
+		.container {
+			display: flex;
+			flex-direction: column;
+			justify-content: center;
+			align-items: center;
+			width: 100%;
+			height: 100%;
+			margin: auto;
+		}
+
+		.seconds-holder {
+			margin: auto;
+			display: flex;
+			justify-content: space-around;
+			align-items: center;
+			padding: 10px;
+			background: transparent;
+			width: 100%;
+			height: 10rem;
+			margin-top: 10px;
+		}
+
+		.second {
+			margin-left: 10px;
+			padding: 10px;
+			color: white;
+			font-size: 3rem;
+		}
+
+		.fader {
+			background: linear-gradient(to right,
+			 rgba(189,189,189,1), 
+			 rgba(255,0,0,0) 40%,
+			 rgba(255,0,0,0) 60%,
+
+			 rgba(189,189,189,1)
+			 );
+		}
+
+		.first-second {
+			opacity: 0.3;
+		}
+
+		.second-second {
+			opacity: 0.6;
+			font-size: 5rem;
+		}
+
+		.current-second {
+			font-size: 8rem;
+			color:ghostwhite;
+		}
+
+		.time-holder, .arrow {
+			margin: auto;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			font-size: 10rem;
+			color:white;
+			margin-bottom: 10px;
+
+		}
+
+		.arrow {
+			margin: 0;
+			padding: 0;
+			align-items: flex-end;
+			font-size: 4rem;
+
+		}
+
+		
+	</style>
+
+
+</head>
+
+
+<body>
+	<div class="container">
+		<div class="time-holder">
+			<span class="digit">1</span>
+			<span class="digit">2</span>
+			<span class="colon">:</span>
+			<span class="digit">4</span>
+			<span class="digit">0</span>
+		</div>
+		<div class="arrow">▽</div>
+		<div class="seconds-holder fader">
+			<div class="second first-second">
+				10
+			</div>
+			<div class="second second-second">
+				11
+			</div>
+			<div class="second current-second">
+				12
+			</div>
+			<div class="second second-second">
+				13
+			</div>
+			<div class="second first-second">
+				14
+			</div>
+		</div>
+	</div>
+		
+	
+
+
+</body>
+</html>
