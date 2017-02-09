@@ -87,11 +87,79 @@
 			padding: 0;
 			align-items: flex-end;
 			font-size: 4rem;
+			font-weight: bold;
+			/*text-shadow: 1px 1px ;*/
+			animation-name: blink;
+			animation-duration: 1s;
+			animation-iteration-count: infinite;
 
 		}
 
+		/**
+		 * ANIMATIONS !!!
+		 */
+		
+		@keyframes blink {
+			0% {
+				opacity: 1;
+			}
+			50% {
+				opacity: 0;
+
+			}
+		}
+
+		.colon {
+			/*animation-name: blink;
+			animation-iteration-count: infinite;
+			animation-duration: 1s;*/
+
+		}
 		
 	</style>
+	<script type="text/javascript" async defer onload="init()" src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.2/jquery.min.js"></script>
+
+	<script type="text/javascript">
+		
+		function init() {
+			$(document).ready(function(e){
+				var domCache;
+				domCache=startCache();
+				init_clock(domCache);
+				function tick() {
+					//create a closure for easy access to domCache cached dom object
+					
+				}
+
+			});
+		}	
+
+		function startCache() {
+			//we cannot afford to query the DOM every time because we have a Lot of things going on each second.
+			//cache all the stuff here.
+			//cache the seconds.
+			var objects = {
+
+			};
+
+			objects.current = $(".current-second");
+			objects.first = $(".first-second:first");
+			objects.second = $(".second-second:first");
+			objects.fourth = $(".fourth-second");
+			objects.fifth =  $(".fifth-second");
+
+			objects.hours = $(".time-holder").find(".digit:first");
+			objects.mins = $(".time-holder").find('.digit:last');
+
+			return objects;
+
+		}
+
+		function init_clock (hours, mins, seconds) {
+
+		}
+
+	</script>
 
 
 </head>
@@ -100,14 +168,14 @@
 <body>
 	<div class="container">
 		<div class="time-holder">
-			<span class="digit">1</span>
-			<span class="digit">2</span>
+			<span class="digit">12</span>
+			<!-- <span class="digit">2</span> -->
 			<span class="colon">:</span>
-			<span class="digit">4</span>
-			<span class="digit">0</span>
+			<span class="digit">40</span>
+			<!-- <span class="digit">0</span> -->
 		</div>
 		<div class="arrow">▽</div>
-		<div class="seconds-holder fader">
+		<div class="seconds-holder">
 			<div class="second first-second">
 				10
 			</div>
@@ -117,10 +185,10 @@
 			<div class="second current-second">
 				12
 			</div>
-			<div class="second second-second">
+			<div class="second second-second fourth-second">
 				13
 			</div>
-			<div class="second first-second">
+			<div class="second first-second fifth-second">
 				14
 			</div>
 		</div>
