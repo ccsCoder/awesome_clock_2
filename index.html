@@ -28,7 +28,7 @@
 			margin: auto;
 		}
 
-		.seconds-holder {
+		#seconds-holder {
 			margin: auto;
 			display: flex;
 			justify-content: space-around;
@@ -41,11 +41,14 @@
 		}
 
 		.second {
-			margin-left: 10px;
-			padding: 10px;
+			/*margin-left: 10px;*/
+			box-sizing: border-box;
+			/*padding: 10px;*/
 			color: white;
 			font-size: 3rem;
 		}
+
+
 
 		.fader {
 			background: linear-gradient(to right,
@@ -64,6 +67,7 @@
 		.second-second {
 			opacity: 0.6;
 			font-size: 5rem;
+
 		}
 
 		.current-second {
@@ -81,6 +85,11 @@
 			margin-bottom: 10px;
 
 		}
+		.fourth-second {
+			transition: all;
+			transition-property: all;
+			transition-duration: 300ms;
+		}
 
 		.arrow {
 			margin: 0;
@@ -88,9 +97,12 @@
 			align-items: flex-end;
 			font-size: 4rem;
 			font-weight: bold;
-			/*text-shadow: 1px 1px ;*/
-			animation-name: blink;
-			animation-duration: 1s;
+		}
+
+		.blinker {
+			/*animation-name: blink;*/
+			animation-duration: 1000ms;
+			animation-delay: 1000ms;
 			animation-iteration-count: infinite;
 
 		}
@@ -109,28 +121,18 @@
 			}
 		}
 
-		.colon {
-			/*animation-name: blink;
-			animation-iteration-count: infinite;
-			animation-duration: 1s;*/
-
-		}
 		
 	</style>
 	<script type="text/javascript" async defer onload="init()" src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.2/jquery.min.js"></script>
 
 	<script type="text/javascript">
-		
+
+	
 		function init() {
 			$(document).ready(function(e){
 				var domCache;
 				domCache=startCache();
 				init_clock(domCache);
-				function tick() {
-					//create a closure for easy access to domCache cached dom object
-					
-				}
-
 			});
 		}	
 
@@ -151,12 +153,92 @@
 			objects.hours = $(".time-holder").find(".digit:first");
 			objects.mins = $(".time-holder").find('.digit:last');
 
+			//also cache in the second representation
+			objects.secondsText = {
+
+			};
+
+			for(var i=1;i<=60;i++) {
+				objects.secondsText[""+i] = addZero(i);
+			}
+
+			//handle cases for -1, -2, 60 and 61
+			objects.secondsText['-1'] = '60';
+			objects.secondsText['0'] = '59';
+			objects.secondsText['1'] = '01';
+			objects.secondsText['61'] = '00';
+			objects.secondsText['62'] = '01';
+
+
+			console.log(objects.secondsText);
+
 			return objects;
 
 		}
 
-		function init_clock (hours, mins, seconds) {
+		function addZero(i) {
+		    if (i < 10) {
+		        i = "0" + i;
+		    }
+		    return i;
+		}
 
+		function init_clock (domCache) {
+
+				$(".arrow").addClass('blinker');
+				tick(domCache);
+
+				setInterval(function(){
+						tick(domCache);
+				}, 1000);
+		}
+
+		function tick(domCache) {
+			var d = new Date();
+			var hour = addZero(d.getHours());
+			var mins = addZero(d.getMinutes());
+			var seconds = d.getSeconds();
+
+			if (seconds===0) 
+				seconds=1;
+			else {
+				seconds++;
+			}
+
+			set_clock(domCache, hour, mins, seconds);
+
+
+		}
+
+		function set_clock(domCache, hour, mins, seconds) {
+			//now set the clock
+
+			domCache.hours.text(hour);
+			domCache.mins.text(mins);
+			//debugger;
+			//first remove the first guy
+			//domCache.first.text(domCache.second.text());
+
+			//domCache.first=domCache.second.removeClass("second-second").addClass('first-second');
+			//domCache.second=domCache.current.removeClass('current-second').addClass('second-second');
+			//domCache.current = domCache.fourth.removeClass('fourth-second').addClass('current-second');
+			//domCache.fourth = domCache.fifth.removeClass('fifth-second').addClass('second-second fourth-second');
+			//domCache.fifth = $('<div class="second first-second fifth-second"></div>').appendTo($("#seconds-holder"));
+			//domCache.fifth.text()
+			
+			
+
+			domCache.current.text(domCache.secondsText[''+seconds]);
+
+			domCache.first.text(domCache.secondsText[''+(seconds-2)]);
+			domCache.second.text(domCache.secondsText[''+(seconds-1)]);
+			domCache.fourth.text(domCache.secondsText[''+(seconds+1)]);
+			domCache.fifth.text(domCache.secondsText[''+(seconds+2)]);
+
+
+
+
+			
 		}
 
 	</script>
@@ -175,7 +257,7 @@
 			<!-- <span class="digit">0</span> -->
 		</div>
 		<div class="arrow">▽</div>
-		<div class="seconds-holder">
+		<div id="seconds-holder">
 			<div class="second first-second">
 				10
 			</div>
